@@ -45,7 +45,7 @@ def find_trade():
         imgNew = "clashroyale"
         shutil.move(img, os.path.join(dir, imgNew + ".png"))
 
-        click("1540307401692.png")
+        click("1540555920427.png")
         click("1540319481238.png")
         click("1540319491461.png")
 
