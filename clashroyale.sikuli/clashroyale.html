@@ -74,6 +74,8 @@
 <span class="kw">import</span> os
 <span class="kw">import</span> time
 
+clans = [ <span class="str">"#8V8CC2"</span>, <span class="str">"#2999R82R"</span>, <span class="str">"#PPC8QPY9"</span>, <span class="str">"#89GLVGGC"</span>, <span class="str">"#98QYCVVQ"</span>, <span class="str">"#QRCVRJY"</span>, <span class="str">"#8RVVU8RY"</span>, <span class="str">"#2QJR8G2G"</span>, <span class="str">"#8V2V2GLJ"</span>, <span class="str">"#UJGR90R"</span>, <span class="str">"#29RR9Q00"</span>, <span class="str">"#80JR9CY8"</span>, <span class="str">"#2LG00R"</span>, <span class="str">"#9RVPU8CC"</span>, <span class="str">"#9GJLUJP2"</span>, <span class="str">"#2VP2UP"</span>, <span class="str">"#JUGYLQG"</span>, <span class="str">"#PVUJQQ9"</span>, <span class="str">"#9CYYJR0G"</span>, <span class="str">"#98P22CYQ"</span>, <span class="str">"#YCVUR2"</span>, <span class="str">"#99PRPCJ2"</span>, <span class="str">"#9CYYC2RC"</span>, <span class="str">"#8Y2P0Y8"</span>, <span class="str">"#P88P9VRY"</span>, <span class="str">"#2QPVJ0L9"</span>, <span class="str">"#9PURUQGL"</span>, <span class="str">"#9UJRCC08"</span>, <span class="str">"#JYYQ0G"</span>, <span class="str">"#9CY92C92"</span>, <span class="str">"#CQJY8RP"</span>, <span class="str">"#9JP2CL2Y"</span>, <span class="str">"#PU988Q0"</span>, <span class="str">"#9ULPC080"</span>, <span class="str">"#292J8QV"</span>, <span class="str">"#9JL0ULC9"</span>, <span class="str">"#2JV0VL8"</span>, <span class="str">"#99GJJJGC"</span>, <span class="str">"#9PVY28R"</span>, <span class="str">"#2VUVU2U"</span>, <span class="str">"#P0GCGGJC"</span>, <span class="str">"#2V9C0YYQ"</span>, <span class="str">"#RPLQV2P"</span>, <span class="str">"#8290GQ90"</span>, <span class="str">"#8YCCVU0"</span>, <span class="str">"#G2PJURR"</span>, <span class="str">"#82PRP29C"</span>, <span class="str">"#PL299P"</span>, <span class="str">"#CL8CP0"</span>, <span class="str">"#P8GYCGYR"</span>, <span class="str">"#LGRJ9G"</span>, <span class="str">"#8GGRG0VY"</span>, <span class="str">"#8GLGPPLL"</span>, <span class="str">"#8R9JY9UC"</span>, <span class="str">"#JRCQRY"</span> ]
+
 r = App.focusedWindow()
 r2 = Region(r.x, r.y + <span class="dig">600</span>, r.w, r.h - <span class="dig">600</span>)
 r.setAutoWaitTimeout(<span class="dig">2</span>)
@@ -135,8 +137,11 @@ r.highlight(<span class="dig">2</span>)
     r.<span class="skw">click</span>(<img src="LeaveButton.png" />)
     r.<span class="skw">click</span>(<img src="YesButton.png" />)
 
-<span class="kw">while</span> r.exists(<img src="ShopTab.png" />):
+<span class="kw">for</span> clan <span class="kw">in</span> clans:
     <span class="kw">if</span> r.exists(<img src="SearchButton.png" />):
+        r.<span class="skw">type</span>(<img src="1540555777035.png" /> ,clan)
+        r.<span class="skw">click</span>(<img src="1540555791644.png" />)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
         r.<span class="skw">click</span>(<img src="YellowTrophy.png" />)
         <span class="kw">if</span> r.exists(<img src="JoinButton.png" />):
             r.<span class="skw">click</span>(<img src="JoinButton.png" />)
