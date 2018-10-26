@@ -108,7 +108,7 @@ r.highlight(<span class="dig">2</span>)
     mouseUp()
 
 <span class="kw">def</span> find_trade():
-    <span class="kw">while</span> r.exists(<img src="1540300646315.png" />):
+    <span class="kw">while</span> r.exists(<img src="TradeButton.png" />):
         dir = <span class="str">"D:\Skulix\Screenshots"</span>
         img = <span class="skw">capture</span>(r)
 
@@ -121,28 +121,28 @@ r.highlight(<span class="dig">2</span>)
 
         scroll_down()
 
-        <span class="kw">if</span> r.exists(<img src="1540320185273.png" />):
+        <span class="kw">if</span> r.exists(<img src="GR8.png" />):
             <span class="kw">return</span>
 
-    <span class="kw">if</span> r2.exists(<img src="1540319994212.png" />):
-        r2.<span class="skw">click</span>(<img src="1540319994212.png" />)
+    <span class="kw">if</span> r2.exists(<img src="UpperNotification.png" />):
+        r2.<span class="skw">click</span>(<img src="UpperNotification.png" />)
         find_trade()
 
 <span class="kw">def</span> leave_clan():
-    <span class="kw">if</span> <span class="kw">not</span> r.exists(<img src="1540319732251.png" />):
-        r.<span class="skw">click</span>(<img src="1540319740979.png" />)
-    r.<span class="skw">click</span>(<img src="1540319732251.png" />)
-    r.<span class="skw">click</span>(<img src="1540319764194.png" />)
-    r.<span class="skw">click</span>(<img src="1540319769646.png" />)
+    <span class="kw">if</span> <span class="kw">not</span> r.exists(<img src="PurpleTrophy.png" />):
+        r.<span class="skw">click</span>(<img src="SocialTab.png" />)
+    r.<span class="skw">click</span>(<img src="PurpleTrophy.png" />)
+    r.<span class="skw">click</span>(<img src="LeaveButton.png" />)
+    r.<span class="skw">click</span>(<img src="YesButton.png" />)
 
-<span class="kw">while</span> r.exists(<img src="1540319785834.png" />):
-    <span class="kw">if</span> r.exists(<img src="1540319811275.png" />):
-        r.<span class="skw">click</span>(<img src="1540319821508.png" />)
-        <span class="kw">if</span> r.exists(<img src="1540319843114.png" />):
-            r.<span class="skw">click</span>(<img src="1540319843114.png" />)
-            <span class="skw">wait</span>(<img src="1540319865013.png" />)
+<span class="kw">while</span> r.exists(<img src="ShopTab.png" />):
+    <span class="kw">if</span> r.exists(<img src="SearchButton.png" />):
+        r.<span class="skw">click</span>(<img src="YellowTrophy.png" />)
+        <span class="kw">if</span> r.exists(<img src="JoinButton.png" />):
+            r.<span class="skw">click</span>(<img src="JoinButton.png" />)
+            <span class="skw">wait</span>(<img src="PageDownButton.png" />)
             scroll_up()
-            <span class="kw">if</span> r2.exists(<img src="1540319994212.png" />) <span class="kw">or</span> r.exists(<img src="1540300646315.png" />):
+            <span class="kw">if</span> r2.exists(<img src="UpperNotification.png" />) <span class="kw">or</span> r.exists(<img src="TradeButton.png" />):
                 find_trade()
             leave_clan()
     <span class="kw">else</span>:

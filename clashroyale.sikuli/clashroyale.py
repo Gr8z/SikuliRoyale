@@ -36,7 +36,7 @@ def scroll_up():
     mouseUp()
 
 def find_trade():
-    while r.exists("1540300646315.png"):
+    while r.exists("TradeButton.png"):
         dir = "D:\Skulix\Screenshots"
         img = capture(r)
 
@@ -49,28 +49,28 @@ def find_trade():
 
         scroll_down()
 
-        if r.exists("1540320185273.png"):
+        if r.exists("GR8.png"):
             return
 
-    if r2.exists("1540319994212.png"):
-        r2.click("1540319994212.png")
+    if r2.exists("UpperNotification.png"):
+        r2.click("UpperNotification.png")
         find_trade()
     
 def leave_clan():
-    if not r.exists("1540319732251.png"):
-        r.click("1540319740979.png")
-    r.click("1540319732251.png")
-    r.click("1540319764194.png")
-    r.click("1540319769646.png")
+    if not r.exists("PurpleTrophy.png"):
+        r.click("SocialTab.png")
+    r.click("PurpleTrophy.png")
+    r.click("LeaveButton.png")
+    r.click("YesButton.png")
         
-while r.exists("1540319785834.png"):
-    if r.exists("1540319811275.png"):
-        r.click("1540319821508.png")
-        if r.exists("1540319843114.png"):
-            r.click("1540319843114.png")
-            wait("1540319865013.png")
+while r.exists("ShopTab.png"):
+    if r.exists("SearchButton.png"):
+        r.click("YellowTrophy.png")
+        if r.exists("JoinButton.png"):
+            r.click("JoinButton.png")
+            wait("PageDownButton.png")
             scroll_up()
-            if r2.exists("1540319994212.png") or r.exists("1540300646315.png"):
+            if r2.exists("UpperNotification.png") or r.exists("TradeButton.png"):
                 find_trade()
             leave_clan()
     else:
