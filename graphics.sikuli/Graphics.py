@@ -1,12 +1,11 @@
 
 "B_ClanSearch.png"
 
-"B_YellowTrophy.png""B_Join.png""B_Bottom.png""B_Notification1.png""B_Notification2.png""B_Notification3.png""B_Notification4.png""B_Notification5.png""B_Notification6.png"
+"B_YellowTrophy.png""B_Join.png""B_Close.png""B_Bottom.png""B_Notification1.png""B_Notification2.png""B_Notification3.png""B_Notification4.png""B_Notification5.png""B_Notification6.png"
 
 "B_PurpleTrophy.png""B_Leave.png""B_Yes.png"
 
 "B_Trade.png" "B_ScreenCapture.png"
-
 
 "C_Princess.png""C_Sparky.png""C_Miner.png""C_IceWiz.png""C_MegaKnight.png""C_LumberJack.png""C_EWiz.png""C_LavaHound.png""C_Bandit.png""C_Ghost.png""C_NightWitch.png""C_InfernoDragon.png""C_GraveYard.png""C_Log.png""C_MagicArcher.png"
 
