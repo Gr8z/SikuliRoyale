@@ -65,11 +65,10 @@ def find_trade():
         find_trade()
     
 def leave_clan():
-    if not r.exists("PurpleTrophy.png"):
-        r.click("SocialTab.png")
-    r.click("PurpleTrophy.png")
-    r.click("LeaveButton.png")
-    r.click("YesButton.png")
+    if r.exists("PurpleTrophy.png"):
+        r.click("PurpleTrophy.png")
+        r.click("LeaveButton.png")
+        r.click("YesButton.png")
         
 for clan in clans:
     if count > 200:
@@ -92,7 +91,9 @@ for clan in clans:
                 r.click("1540556749121.png")
                 print(clan)
                 continue
-            wait("PageDownButton.png")
+            if not exists("PageDownButton.png"):
+                print(clan)
+                continue
             scroll_up()
             scroll_up()
             if r2.exists("UpperNotification.png") or r.exists("TradeButton.png"):

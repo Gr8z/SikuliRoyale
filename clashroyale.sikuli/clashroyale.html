@@ -137,11 +137,10 @@ r.highlight(<span class="dig">2</span>)
         find_trade()
 
 <span class="kw">def</span> leave_clan():
-    <span class="kw">if</span> <span class="kw">not</span> r.exists(<img src="PurpleTrophy.png" />):
-        r.<span class="skw">click</span>(<img src="SocialTab.png" />)
-    r.<span class="skw">click</span>(<img src="PurpleTrophy.png" />)
-    r.<span class="skw">click</span>(<img src="LeaveButton.png" />)
-    r.<span class="skw">click</span>(<img src="YesButton.png" />)
+    <span class="kw">if</span> r.exists(<img src="PurpleTrophy.png" />):
+        r.<span class="skw">click</span>(<img src="PurpleTrophy.png" />)
+        r.<span class="skw">click</span>(<img src="LeaveButton.png" />)
+        r.<span class="skw">click</span>(<img src="YesButton.png" />)
 
 <span class="kw">for</span> clan <span class="kw">in</span> clans:
     <span class="kw">if</span> count &gt; <span class="dig">200</span>:
@@ -164,7 +163,9 @@ r.highlight(<span class="dig">2</span>)
                 r.<span class="skw">click</span>(<img src="1540556749121.png" />)
                 <span class="kw">print</span>(clan)
                 <span class="kw">continue</span>
-            <span class="skw">wait</span>(<img src="PageDownButton.png" />)
+            <span class="kw">if</span> <span class="kw">not</span> exists(<img src="PageDownButton.png" />):
+                <span class="kw">print</span>(clan)
+                <span class="kw">continue</span>
             scroll_up()
             scroll_up()
             <span class="kw">if</span> r2.exists(<img src="UpperNotification.png" />) <span class="kw">or</span> r.exists(<img src="TradeButton.png" />):
