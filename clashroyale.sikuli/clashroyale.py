@@ -8,41 +8,26 @@ clans = [ "#20UGYR9", "#28800P9U", "#L9GPUL9", "#9GG8U8YP", "#208LRR2Y", "#8V0CR
 random.shuffle(clans)
 
 r = App.focusedWindow()
-r2 = Region(r.x, r.y + 600, r.w, r.h - 600)
-r.setAutoWaitTimeout(2)
+r2 = Region(r.x, r.y + 150, r.w - 400, r.h - 800)
 r.highlight(2)
-
-def scroll_down():
-    # setting begin - end
-    x1, y1 = (r.x + 230, r.y + 700)
-    start = Location(x1, y1)
-    # moving up
-    stepY = 100
-    run = start
-    mouseMove(start)
-    mouseDown(Button.LEFT); wait(0.5)
-    for i in range(4):
-        run = run.above(stepY * i)
-        mouseMove(run)
-    mouseUp()
 
 def scroll_up():
     # setting begin - end
     x1, y1 = (r.x + 230, r.y + 200)
     start = Location(x1, y1)
     # moving up
-    stepY = 100
+    stepY = 200
     run = start
     mouseMove(start)
     mouseDown(Button.LEFT); wait(0.5)
-    for i in range(4):
-        run = run.below(stepY * i)
-        mouseMove(run)
+    run = run.below(stepY)
+    mouseMove(run)
     mouseUp()
 
 def find_trade():
     global count
-    while r.exists("TradeButton.png"):
+    if r.exists("TradeButton.png"):
+        scroll_up()
         dir = "D:\Skulix\Screenshots"
         img = capture(r)
 
@@ -55,13 +40,8 @@ def find_trade():
 
         count += 1
 
-        scroll_down()
-
-        if r.exists("GR8.png"):
-            return
-
-    if r2.exists("UpperNotification.png"):
-        r2.click("UpperNotification.png")
+    if r2.exists("1541321891125.png"):
+        r2.click("1541321891125.png")
         find_trade()
     
 def leave_clan():
@@ -94,9 +74,11 @@ for clan in clans:
             if not exists("PageDownButton.png"):
                 print(clan)
                 continue
+            else:
+                click("PageDownButton.png")
+            wait(1)
             scroll_up()
-            scroll_up()
-            if r2.exists("UpperNotification.png") or r.exists("TradeButton.png"):
+            if r2.exists("1541321891125.png") or r.exists("TradeButton.png"):
                 find_trade()
             leave_clan()
         else:

@@ -80,41 +80,26 @@ clans = [ <span class="str">"#20UGYR9"</span>, <span class="str">"#28800P9U"</sp
 random.shuffle(clans)
 
 r = App.focusedWindow()
-r2 = Region(r.x, r.y + <span class="dig">600</span>, r.w, r.h - <span class="dig">600</span>)
-r.setAutoWaitTimeout(<span class="dig">2</span>)
+r2 = Region(r.x, r.y + <span class="dig">150</span>, r.w - <span class="dig">400</span>, r.h - <span class="dig">800</span>)
 r.highlight(<span class="dig">2</span>)
-
-<span class="kw">def</span> scroll_down():
-    <span class="cmt"># setting begin - end</span>
-    x1, y1 = (r.x + <span class="dig">230</span>, r.y + <span class="dig">700</span>)
-    start = Location(x1, y1)
-    <span class="cmt"># moving up</span>
-    stepY = <span class="dig">100</span>
-    run = start
-    mouseMove(start)
-    mouseDown(Button.LEFT); <span class="skw">wait</span>(<span class="dig">0.5</span>)
-    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">4</span>):
-        run = run.above(stepY * i)
-        mouseMove(run)
-    mouseUp()
 
 <span class="kw">def</span> scroll_up():
     <span class="cmt"># setting begin - end</span>
     x1, y1 = (r.x + <span class="dig">230</span>, r.y + <span class="dig">200</span>)
     start = Location(x1, y1)
     <span class="cmt"># moving up</span>
-    stepY = <span class="dig">100</span>
+    stepY = <span class="dig">200</span>
     run = start
     mouseMove(start)
     mouseDown(Button.LEFT); <span class="skw">wait</span>(<span class="dig">0.5</span>)
-    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">4</span>):
-        run = run.below(stepY * i)
-        mouseMove(run)
+    run = run.below(stepY)
+    mouseMove(run)
     mouseUp()
 
 <span class="kw">def</span> find_trade():
     <span class="kw">global</span> count
-    <span class="kw">while</span> r.exists(<img src="TradeButton.png" />):
+    <span class="kw">if</span> r.exists(<img src="TradeButton.png" />):
+        scroll_up()
         dir = <span class="str">"D:\Skulix\Screenshots"</span>
         img = <span class="skw">capture</span>(r)
 
@@ -127,13 +112,8 @@ r.highlight(<span class="dig">2</span>)
 
         count += <span class="dig">1</span>
 
-        scroll_down()
-
-        <span class="kw">if</span> r.exists(<img src="GR8.png" />):
-            <span class="kw">return</span>
-
-    <span class="kw">if</span> r2.exists(<img src="UpperNotification.png" />):
-        r2.<span class="skw">click</span>(<img src="UpperNotification.png" />)
+    <span class="kw">if</span> r2.exists(<img src="1541321891125.png" />):
+        r2.<span class="skw">click</span>(<img src="1541321891125.png" />)
         find_trade()
 
 <span class="kw">def</span> leave_clan():
@@ -166,9 +146,11 @@ r.highlight(<span class="dig">2</span>)
             <span class="kw">if</span> <span class="kw">not</span> exists(<img src="PageDownButton.png" />):
                 <span class="kw">print</span>(clan)
                 <span class="kw">continue</span>
+            <span class="kw">else</span>:
+                <span class="skw">click</span>(<img src="PageDownButton.png" />)
+            <span class="skw">wait</span>(<span class="dig">1</span>)
             scroll_up()
-            scroll_up()
-            <span class="kw">if</span> r2.exists(<img src="UpperNotification.png" />) <span class="kw">or</span> r.exists(<img src="TradeButton.png" />):
+            <span class="kw">if</span> r2.exists(<img src="1541321891125.png" />) <span class="kw">or</span> r.exists(<img src="TradeButton.png" />):
                 find_trade()
             leave_clan()
         <span class="kw">else</span>:
