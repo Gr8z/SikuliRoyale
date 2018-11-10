@@ -2,20 +2,23 @@ import shutil
 import os
 import time
 import random
+import json
 
-count = 0
-clans = [ "#20UGYR9", "#28800P9U", "#L9GPUL9", "#9GG8U8YP", "#208LRR2Y", "#8V0CRQQ", "#9CLPYUCG", "#PYJUCVJG", "#2JR9CLJG", "#22UYPRL", "#2UU9989L", "#8RJ9CLG2", "#9RQR82P", "#8L82JPR2", "#2JVUGV9G", "#22Q920YR", "#9RGCY8GG", "#8J98LC8L", "#8U90QU", "#90G2RYPR", "#8V2P2V8V", "#2QLUGRL", "#8Y2298V", "#2VJVGCJG", "#LVLUJR0", "#8VL80GQJ", "#8ULL9RG2", "#22CUU2U8", "#PLPQ0", "#VLYV2Y9", "#QUY0C0G", "#2RYLQ99Y", "#99Y000J2", "#8G0098R9", "#2229GJU", "#8RRJP92G", "#9LQYCL8Q", "#QLJGYR", "#PP98R8LV", "#9CL8UCQU", "#9YJVCQGG", "#9G8C0LRQ", "#8QP00P0", "#2QJLJGYV", "#Q0QCCGU", "#99LUJ2P", "#RY99RP8", "#22GRRJUQ", "#PY8228P", "#92UY28PY", "#2PRUYVG8", "#820VYVJG", "#RCVLLRR", "#29GQL2PC", "#QCJ22", "#8LGJQL9", "#VVP9CJU", "#UYUQ00C", "#P8VL029Q", "#9VLL8UJ", "#28QQCY", "#2Q98L9GQ", "#8JLCL2JJ", "#P8CCCQ82", "#8RQCP2LY", "#U28PP9Y", "#8LRJ89YV", "#2VUGLL8", "#8PQGLG28", "#98VUG8JU", "#8CJ29PP0", "#9YCJ8RUP", "#2JGJGVVY", "#29GY2CLY", "#P0VP29JY", "#89C80UR8", "#2Y80CQQG", "#P822YU0", "#89QQJVJR", "#VUQJPL", "#2RJLVY88", "#2J002C0Y", "#PGCL088", "#8YRL8U09", "#J9U0RQ", "#8UPV8G8R", "#2GULYRL0", "#9GQ8RGVV", "#9G8P90RQ", "#9P2PQQ0Q", "#8VLJ22J2", "#8CQRY2Y2", "#9PPRYR8U", "#288GL99L", "#8YRYYPU", "#QY8PCR2", "#8YUUUJJ", "#99C9CCVG", "#PQGQGG8Y", "#9RLVCRRY", "#8UJ2CVG0", "#8R8PQ8P9", "#VJRVCL", "#V28", "#PY0LRP0R", "#2CJUGRUY", "#PGJL02PV", "#99LYC0YG", "#8VY9CG8", "#9RVCUQPY", "#2CGY2QGV", "#VRR2PJY", "#9J9Y80V8", "#PY29UYR", "#UJ08R0", "#R9V208", "#9GQV9PLQ", "#PU02LQ8", "#2RP8U00", "#8GVGUULJ", "#92LPRRGV", "#LVCRR9C", "#90YG2JPV", "#PPJG8V9", "#9GU8PLG8", "#9YQG00CL", "#9QLQLR08", "#2C888YCY", "#28CQ2Q0G", "#2GY9RGG", "#2CYJ8YQ", "#89GGCJLY", "#CV9YJU", "#J9U008Y", "#J8L9JJ", "#9LUG8QYQ", "#8YJLUYPV", "#8YRYYP0V", "#29VG2LUL", "#2YRLPRQL", "#P9CGCVQV", "#2YP290JL", "#2CYC8RLJ", "#88CQVV92", "#9L2J00R9", "#9JR00RPC", "#9JCY20G8", "#9LLC20C", "#92UL2GU0", "#2PLJUV8U", "#82PJYG8", "#RY9C0", "#8GUGVURR", "#2YU88PY0", "#LVL9LC", "#208JVR0", "#PJ8GGPU", "#80RYRUL9", "#9282U29G", "#8UVY29LQ", "#2900URQ8", "#2C8Q8G2U", "#9QCGL8V", "#828QG8GJ", "#9VRYY08", "#J9GRGJ", "#8GCGVG", "#8VY8VR8U", "#LQUYU0G", "#P8CRRLQY", "#2G9CQ2QL", "#UR8RYVC", "#9LJ8R2J", "#2YY0C2PG", "#VJ2PCUR", "#GQUQCJ", "#2090PCU2", "#2YYVCLQ", "#9P9VYL0V", "#28VPJLUV", "#2PPQR2U", "#2GG2CQ98", "#2U2LPULL", "#2ULL98PJ", "#2LL8V2UY", "#9LGJCUL8", "#8L8RCUPU", "#82PQLUL2", "#2JGG9UP9", "#2U229PC", "#2LLYLG9Q", "#L0R09UC", "#8LVVL8RV", "#9Y8YV29U", "#QPG2VCP", "#8QVRVR2G", "#90P2RYVJ", "#892CGQCC", "#RJPGCG", "#V2C9G2", "#9VJ8V2Q0", "#2QGPCJ0G", "#8GC8LG", "#90U2URJU", "#2JYC0LQY", "#2U0P89U8", "#CCCLGU0", "#2G9LVQY", "#899Q00Q9", "#VLVLYV2", "#2C8LRL", "#88CVVR00", "#9CJ8CJRQ", "#8YCJJGYP", "#J8GPYC0", "#V8VL9UY", "#9C9UULPG", "#R2J8LU", "#8U9LJ0R", "#9Q0RYCPY", "#PPVQ0LVU", "#P8CRUCQU", "#2J0RR2LQ", "#2QL2CRV0", "#2RCCLCLY", "#88GJGYGG", "#2QCJPGRG", "#8JJGJP2G", "#P8YCGGV8", "#89GUUVY", "#80JGYQ8", "#2L2PC8C0", "#28RRVLV9", "#C2U90J2", "#8VGGYGUL", "#9L9LVCL", "#28UYPCL", "#L9RYL8", "#8PP9RY82", "#9JJCG8GU", "#8LP0VQQR", "#UVJPJ", "#JJV2RGR", "#9QQPLP8G", "#UU82CR", "#9PRP9GYQ", "#9PPUQ0P0", "#8CUPJPLY", "#8QU9J2CY", "#P0J02PJR", "#PLQG9LYL", "#28PUQGUV", "#8098JU08", "#2Y2QGPC", "#89U9RP82", "#28CLRVCR", "#2PUVC90V", "#8Q0PG2J2", "#RPURG2", "#9L2UP9PL", "#22RJQUUC", "#2QJJ8R8U", "#JLJCL9U", "#P099UVV0", "#2LU9GRG", "#YJRU9V8", "#229Y9LVQ", "#88YJ00UG", "#88VJJPLU", "#999CLPPY", "#208RCRQR", "#PQ29JJRP", "#V8PCCGJ", "#9PYG089L", "#P90CUYQ", "#JJ0UGV", "#9JYCU8Q", "#9RJ0QQ9P", "#2J2L0CQP", "#20PPLC2R", "#8VPUPCYJ", "#8QJYQ0PJ", "#RC9G90R", "#2U0Q292Y", "#8V802VRJ", "#P9JYLJ", "#P80VVQ9L", "#8GGU0RG0", "#8LQQY809", "#2G8Q8QUC", "#2G0YG2C", "#9QQJCR9U", "#8V9VYJ9C", "#P82L02Q", "#22YYUY8V", "#C8GCRLP", "#9YGQ0J0", "#298PP2C", "#VQR0RPY", "#VV0RCUL", "#2QJLQGR9", "#2C92UGLG", "#P88QYYJ", "#2GLJ2LGP", "#8UQQG0UV", "#8CUG9YYV", "#99RPLVR0", "#9C8RQ2", "#8QQVJLUV", "#9LL8RJJ9", "#22QGVVRG", "#2RLPLRVR", "#8PLYCPJR", "#9C00VL", "#8UPCQCRJ", "#2YR029LV", "#8LRU09L", "#22CQ29Y2", "#QCVGVC", "#9JPGJCRL", "#9J80GYVL", "#9QY988", "#8GPP9LUY", "#8VV9PYRJ", "#YP0C09", "#9UGG8URJ", "#9Y9GLR2", "#PJGUG8CC", "#22YU8GY", "#8CPPLRL9", "#92RL9QJV", "#29LCPV8G", "#2C9G8LC2", "#220U8U29", "#JRJ9YC", "#PY892PP2", "#9GQRVL0C", "#8L020RV2", "#9J0LGCC0", "#VC8R82L", "#8PRGPVQ", "#22L808G", "#222LGQ0G", "#YLCVYV2", "#8Q9LYPUP", "#889YPQR9", "#8GQP2YPU", "#92RCQPCY", "#2QJ08VCJ", "#9Y9JC0PQ", "#UQCYL2", "#8VP0R29", "#88RRJCRP", "#8RCR82GR", "#P8LCU8", "#88UCP9PJ", "#2LQRUQRJ", "#Q0C2UUG", "#9L2RGCG9", "#2J8JU08L", "#GVRQV88", "#29C9QQCR", "#8Y8YQ8L", "#QUJLQ0", "#28URG2JQ", "#LCY2QJ8", "#2GY0J2LR", "#PLGJ0QUU", "#GP9QPPV", "#VYRLL8", "#9LVU8RJU", "#8CRRPV0U", "#2820Y9PU", "#22UCYPQQ", "#RJ0C2J", "#28UG8QP0", "#UJP8ULV", "#QVVUPGY", "#GJPRGJ0", "#P2CYYVG9", "#92GQJQL0", "#J908C8", "#UL80VP", "#8Y2VVCGC", "#V9RP2R", "#9VUJPRGV", "#2Y0JP2", "#8L0L00J", "#20PYR88", "#9QRCCQ0G", "#2VJJYQ28", "#8GJC82RR", "#2CY2QRQL", "#2CVGPJLJ", "#9UQLGQ2U", "#9JYU2U8L", "#2PPU92L", "#8PLQP0J8", "#Q9CGUV", "#CJCCGY", "#2GY9Q2Y0", "#9PGCRPLG", "#Q0YPYG", "#2LQ8YJRY", "#8GGV2L0R", "#89VR20VY", "#Y2JYGJV", "#8QVLUR0P", "#2J88JLRU", "#UJ9CP8U", "#9JJ9YJ", "#QLP2CCR", "#8GPPYJ90", "#2J2VPVC2", "#9LYPC809", "#8CVPU8GV", "#880VUYQR", "#9J09UYQY", "#Y8ULQ8", "#9CPQPRPR", "#RUVQVC", "#9VQRLVGQ", "#829R998R", "#CGU902", "#Y2CUJY", "#9U28PQGL", "#9RL8CY9C", "#PQ9GLRQ", "#2QPGUG2", "#8LGCJGUQ", "#2VL02PQ0", "#QVJ9G2Q", "#2QCP8RC", "#8Q9Y8R28", "#90JU89L2", "#8LC8YU8Y", "#2Y0CLLU9", "#22Y0PCVR", "#9QGRPU9U", "#C8JVL8L", "#PRQ0GLGY", "#9JCUQ20J", "#28Y98YY9", "#2RRG0R0Q", "#2QRQQUG", "#9CGYVG92", "#82LPPRC9", "#228PUPVC", "#8UPC0CRY", "#R8JLRPY", "#Y00L0RG", "#P82L0RJ9", "#9YCYQR", "#9YQG0QG2", "#8UJQRPYR", "#8CJY9QV", "#8U9JJGR0", "#2PQVVQ0P", "#2080URYY", "#8Y0UGJQ", "#800G8P8Y", "#9YQJYJYY", "#CPQC2UR", "#2JJPRURU", "#LY98QL2", "#RUJQQPC", "#22J9LG2Q", "#20GV0QL2", "#RYYYQR", "#J9YRC0", "#88UV8P0", "#2R80CURL", "#9L8L0JY0", "#82R0VJ", "#90J8RR0", "#8RQ22Y8C", "#UULVR2", "#PYYU99LQ", "#8VCYLJ20", "#VYLCLCY", "#2GVGLC0", "#9PGPC2C8", "#2Y0CVJ8", "#8J0V98J", "#9CLJRGLY", "#8VCR82QJ", "#2RLR89VG", "#8QYYVJQ", "#P9LPYG9J", "#PYGP82GV", "#88JGRV0Y", "#88VG8U0", "#8JJRVLYV", "#80GC2UR2", "#2LJ8LCJ9", "#V9CYVR", "#9GJJ8220", "#2G2QG2V9", "#PLQJU0V", "#Q9UV8Q", "#9P0C08YJ", "#R9LYQ08", "#9YPLVLJQ", "#8VRUG2VR", "#8U288UQL", "#URRRVL2", "#9YG9UQ2V", "#929C292G", "#8LPQLGL2", "#2QCLR929", "#2PYV82Y0", "#9GGRJGVU", "#VCQUQV8", "#88QVY8R", "#2YR9GRVJ", "#VGJ0YLG", "#9VC0CUVG", "#2UGJ9PV8", "#2L9QPL2", "#V8YVQ89", "#22PVV82C", "#C2CRLU2", "#9QYGCY9G", "#88229GYL", "#9U8RJP0V", "#8JJ0VYUU", "#28LUCV0", "#9VY08GRL", "#90LP9V02", "#8V8CU8LL", "#8VJPQL2", "#909YUYPG", "#PP0JJQ09", "#VJLCQQ9", "#V22C8G0", "#2PGP8LQQ", "#22CGPJCY", "#92J80YJJ", "#2LG2JLLY", "#98GPGV8V", "#PQVJJ0P0", "#CPRCYY", "#80LJRJ8U", "#UYG8PUJ", "#8UPJL9LY", "#2LU2V9U", "#89PGGUYV", "#228G98GV", "#802RR8CP", "#820CL92", "#89U0RRRV", "#2PYLV2", "#8G2GJVJY", "#908Q92RP", "#9U0JPP8J", "#PYYQU8P", "#9PYG0RVJ", "#8CLL929", "#9JGP8VQL", "#8GRQJLU", "#2G8JJYYR", "#2LLRPUL2", "#8JPLLUYQ", "#9Q2L0L09", "#2GUPJGC", "#2PURG8", "#2C290GJJ", "#29QJ99J", "#9JQGQ0U", "#2LYLCR", "#8G8LG2QY", "#20UJUCQ", "#9G8QLV2P", "#9U820GUQ", "#92VY0L20", "#8P2YR0QL", "#GRUQR0", "#229QVQU8", "#9CU0G2VU", "#CGQ0LP2", "#YRLYJQL", "#20CPRQV", "#2PR0RYLU", "#9RV0P00Q", "#PQV8VPR9", "#P9JLPGPG", "#80G0VPUC", "#28UR2LVQ", "#J9PP22C", "#29R2V2VY", "#828VV8QL", "#9G928Q2U", "#8CQUGGUU", "#CRJURG", "#9P000RUJ", "#V9QYU0", "#P8L08L", "#9QQ8RYY8", "#9YRLLUJU", "#PLR9RY8", "#8RQJQ8JJ", "#9UCCG82V", "#280UQ0C", "#9JPLVQGR", "#2VCYQ982", "#20GV000", "#2U0CVRL", "#9L9J9GJ2", "#89CUGVPP", "#GJVCU0", "#800QYCU", "#8Y0CG0YJ", "#9YL2VCPJ", "#22L2GVLV", "#R9LGRPQ", "#U9CVJUU", "#9JY9UJ9L", "#2V9PL08Q", "#2YYY9YR", "#92YYL2JP", "#8022Q2PU", "#GC29G9V", "#80GQJJVJ", "#9L8JQCLC", "#8UUL80VL", "#92GPCRLQ", "#92JP0UPC", "#8JJGLC", "#9PQU90GU", "#2RRRPLLU", "#P88JP2UG", "#8Y98CJJ2", "#9QUCUP0P", "#QQYVY", "#2JGPLVGU", "#2CVRJ9GV", "#8LRUY0", "#9G0PCVRP", "#98GGVG0", "#8UC9LQ", "#9LVYU0V0", "#82CLGJ9", "#8GLPYGQ", "#YJJJ90C", "#GR9YVQU", "#88PC2UGV", "#2PP0PRYL", "#9JLQLRPL", "#2UP0JGL", "#9VUPV0YG", "#2U8JYQL8", "#LVCVJG2", "#P9Q202G9", "#UGYGLGU", "#P22RUUCY", "#20YCQP0", "#2V8YUC2", "#GGJQVR0", "#J92GL", "#2LY2JULL", "#28JJVC0P", "#98VVU90U", "#9UPY8G0", "#82RR8JL0", "#JLG0Y2U", "#8CYU8RG", "#2CCLYLCU", "#2CPYUGPR", "#88R99PYL", "#9J02VL08", "#J8JPPPC", "#98JGU09L", "#QYPV0LP", "#9UGCVGGR", "#LYCL2J9", "#9LQCCYJ2", "#8LGYL29V", "#GRLG0U", "#2VQL9RVP", "#8JCL9GLU", "#Y2CCG99", "#9RRVR8JY", "#9G82Y089", "#P8JQLG09", "#PVLLV0Y", "#8QLG00RQ", "#9UU9R0RP", "#GU9YJ9L", "#999PR0C0", "#98LRRJ2V", "#9G2V898V", "#2UG8JU0", "#8CJCYCG", "#J8CCP9C", "#8CJG9LLJ", "#CPGQLVL", "#8LJUQV2V", "#2YL2R0CC", "#UUP8QP", "#9LGGQULY", "#P2VQRPC0", "#P8C9YRLR", "#9QGYYYV", "#8CGYCR9L", "#90QQ09VR", "#98L0UU0C", "#990UL", "#PV9CURV", "#20C2RQ", "#PLVYPV8C", "#2L2L82JV", "#89PQQYRY", "#PPQPYU0L", "#9Q9UVRYY", "#8QU89QPJ", "#2YQR2VP", "#9U28G9JQ", "#2889J2PC", "#9L0GLVYJ", "#8CCGCRRG", "#YLC8PGY", "#VLLJ2YG", "#2VLLRGP9", "#P09LGLV", "#G8LRVV", "#20UQR2J", "#8UCPYV8", "#UCRLPR8", "#8LYVL9", "#20JJRLY0", "#9CVRYC9", "#CYRJP89", "#QRYURU2", "#80JY20PV", "#9LPYQ2JC", "#9P829L2V", "#9JYLQRC", "#Q0YLL8C", "#9GVURLGY", "#J8CUUG9", "#U8UGUC", "#9998PRYV", "#2YYQQVU0", "#2LQ09JPJ", "#2UGVPY29", "#9QQUYPYU", "#29LYV9V", "#9UG9UCQ2", "#L8LVV8R", "#9PUY8PPP", "#8YP8J0", "#QY2VVC9", "#289PG2CC", "#8YJJG9LR", "#8PVL88GV", "#2U02QUY2", "#2VU2YV9C", "#9C0P099V", "#9LYLYCPJ", "#88G9P0V", "#9LJQR0LP", "#2U9LUV", "#2YRRUG9G", "#998Q2QR9", "#9YY8UP8R", "#8J8PU000", "#8PLGJ0PC", "#922RV0L", "#28PYQG20", "#L0JU2C8", "#2R8UPY8L", "#GQP0Y00", "#2CLL0RLP", "#9U2YG9GP", "#8Q0QGY", "#2UP8P2LR", "#8RQ0VG9V", "#98L0Q20L", "#22QULP8L", "#28YRQP2G", "#8QLG2CGV", "#9VR09JVJ", "#2YL9VC82", "#2Y2YPRYQ", "#CJVJ82R", "#9Y9YPUQY", "#99288PQJ", "#2PRJJJYJ", "#2LU2Y9CG", "#20JUVJ8", "#9R9QJ8CL", "#9YY909QP", "#98929RY0", "#9LR9GG2J", "#299GVYY", "#828LP2", "#2RLG22G", "#28C2UGU", "#2UR98Y9Y", "#V2P9RJC", "#2098LJ2", "#88GC2YYQ", "#8RU0QJVV", "#2GR8UG", "#82JR8L", "#P2QVU0YV", "#8CYULPVC", "#2R000U9L", "#90JG90YL", "#2PLRPR0L", "#CLJ9YG2", "#9YV9RQ", "#2QR209RV", "#2CV90PPC", "#8U2VL80", "#2VUYQUJ", "#9CUR2QCL", "#RYYGRJU", "#R0YJ90C", "#P9Y0LL8G", "#899GYRVP", "#2Y9YG82R", "#UR0R2L", "#2R909VJU", "#28YC2G9J", "#9GCUQ8VP", "#20JJ8QU", "#9V80228U", "#9JU8JYGQ", "#8C9GL8YU", "#CV2LYP", "#2PVL8CR", "#2QGJ8Y0G", "#CYJ8Q0", "#8R8QC229", "#9RQR8RYQ", "#8QR2P0C9", "#9PGPVCJQ", "#2PVJGY2U", "#9UJCR89P", "#8VLJGLUG", "#P2V2QC", "#VUV0UY", "#PQP0QLV", "#289JVV2", "#9YQ9UYUP", "#8LR8228P", "#PP88RPVQ", "#8LCQULQU", "#9CJGR09R", "#RYJUGL", "#UPJQCRV", "#PQ2JG09L", "#9LU9LJG9", "#2G8Y0PRU", "#R90PQ2Q", "#PPYU0VJ", "#2PV00RLG", "#GYPR00", "#8V0C0L8", "#2GUPR989", "#C2UJPG8", "#8LLVRJLQ", "#82GGCGLR", "#PV99LJ", "#9JY0PPR", "#8CYQGPU0", "#8CP0GV2R", "#89J2YJ9L", "#2JJR8YCQ", "#8U0VJCCJ", "#2CCUQJUG", "#9YU08VLU", "#9L92GGJP", "#9Y8CUP9Y", "#9PV8RUQJ", "#89V8GG0R", "#2Q2J2GQJ", "#8CUU0JRJ", "#8VLRJUCP", "#8UG9CV8G", "#8J0UVYQ", "#2YVR02UG", "#9JVQGUYG", "#8VUG9QPP", "#22Q2Y0GG", "#J8VCP2Q", "#89UJQG8V", "#8RL8YCQC", "#229LJG0L", "#80R2LY0J", "#YV2QVU", "#2LR2VY29", "#2RQ0JP2L", "#9RUGQLCV", "#8JURGCQQ", "#P0CYJR9Y", "#9VQJ82QY", "#Q22CRRJ", "#8LQPLCJJ", "#8LQYRCP9", "#28VY0PLV", "#L89PGC0", "#Y0J82", "#90UURUUG", "#9JUJGJJY", "#9U0R80CV", "#VVQRC9Q", "#LQ88G", "#8JQ0UJ9C", "#R09PCPU", "#RJ2JQQ9", "#29VPJY8P", "#89YGCVRV", "#J0G9PG", "#8C99YVG", "#8QJY9CUP", "#QGR08Y9", "#9Q28UG8C", "#8Q2PUQC", "#2RQJJJV9", "#2LGP0Y", "#PUGGJV2", "#9LCV00CR", "#9JPJ0JYG", "#28QPVVQ8", "#UPGRVU0", "#2VCCURR8", "#2Q9GUR8L", "#P2GRVJLV", "#RP80RU", "#2QGQ0VGQ", "#GCQVL9U", "#2GJGG80R", "#JLG9GRU", "#9228Y80", "#9PL289", "#2PLL22JV", "#CPVGYRG", "#898P08VR", "#92RRVRCU", "#2YY0YLG", "#9LJCL0PG", "#92P8QGCY", "#8GVVYCJ", "#LJP8LCP", "#9GY822RL", "#8RJU0YC9", "#928YVGVG", "#22LG980P", "#29PY9GUP", "#208C8CPR", "#20C8Y090", "#2VQCVYYP", "#RPCYYPR", "#8YPR8RQU", "#88292QLJ", "#2LUYG2U", "#2LUPUL2U", "#QVJUQLU", "#G0CPC8V", "#2UC28PR9", "#890RULCC", "#J99VRJ9", "#GYRG8P", "#99G22VP", "#2RC8VRLP", "#QPCCG28", "#Q9UY8", "#92CJ2PYU", "#90YGCPUP", "#9YVYGR2R", "#P2CP2PP2", "#8YLVUVPP", "#98029U0", "#2YYR8JQU", "#QGYCV2G", "#9GCJRCJP", "#G2JLJVP", "#2U9C8Y0Q", "#2JG8Q29C", "#VYG8GGY", "#2LCY0YQJ", "#8YYCQLPP", "#9RYV8CYP", "#8JG29U9U", "#2CC9PYQ", "#VUGC9UU", "#LG29YR2", "#2U20UC", "#90CP228", "#9R8RLL0C", "#90PL8Y8", "#PY9CPPU9", "#99V8CQ2U", "#P09R2RLV", "#2VRJ9R", "#8PPRY0LG", "#8JQJGP0L", "#8G29PLCY", "#ULJ8QQQ", "#CQQLL0", "#P0PJRYVJ", "#PG2U0Q98", "#RPPPCUV", "#89JVU8C9", "#P299JCGU", "#2PR0Y0P0", "#8VJVU82J", "#8CRG28V2", "#Y0GGL0V", "#9GU808C", "#GUCPLP", "#PQ0J2JQC", "#80LUP2JY", "#2JRYYVLC", "#9VGGQQGQ", "#9VJQU9YP", "#9JQLLU2G", "#2QPUUV0V", "#UPQRLP", "#8LLJPCG9", "#GL9P8LJ", "#8G0GVG", "#UC920U9", "#28YCCLR", "#22UG8JPU", "#99PR9QLG", "#QUU98R2", "#8LUR9900", "#9J9PV9U2", "#9U00U2P2", "#9L2CL08J", "#888GG802", "#9YUJU0U0", "#9LUR0LQ2", "#CPG20J0", "#LUV9G0Q", "#8QGJ2JY0", "#CV92CC2", "#9G82V988", "#P8LJCR08", "#J0CUP8", "#80CLLGUL", "#QCL8LQ", "#9U8LL2QU", "#2G89VJVV", "#CPRJ2", "#8UVG9VP0", "#2PGCUUG", "#8VQR9JPJ", "#9R2QLL9J", "#89P828JL", "#829JJJV", "#20PL2G8", "#P22RLJRG", "#90LCG22U", "#8RG2VYJ2", "#9RCJ0P0G", "#PRYLVY0Y", "#9QC80LG0", "#8CQLCVU", "#QPCR9QR", "#2CYQRV", "#9GYUGRVQ", "#GCJRYC", "#8GCQQJV", "#92L28J0Y", "#22GYPG20", "#80JRCLLQ", "#2GY822U8", "#2RLPCPY", "#9LU89Q0Q", "#8V2GUR0Y", "#20VY9URG", "#8RUR8PQ8", "#QG9YPJ9", "#2YCQ8QJ9", "#90ULPPY", "#JUPCPJ", "#2Q22C8QV", "#9VCLC0GJ", "#2VP9UR89", "#JL99V8V", "#8UUL9028", "#VYQVL09", "#8LP0RGC9" ]
-random.shuffle(clans)
+count = 1
+badclans = []
+
+with open('D:\Scripts\SikuliRoyale\clashroyale.sikuli\clans.json') as json_data:
+    clans = json.load(json_data)
 
 r = App.focusedWindow()
 r2 = Region(r.x, r.y + 150, r.w - 400, r.h - 800)
+r3 = Region(r.x, r.y + 185, r.w, 480)
 r.highlight(2)
+r.setAutoWaitTimeout(1)
 
 def scroll_up():
-    # setting begin - end
     x1, y1 = (r.x + 230, r.y + 200)
     start = Location(x1, y1)
-    # moving up
     stepY = 200
     run = start
     mouseMove(start)
@@ -24,64 +27,96 @@ def scroll_up():
     mouseMove(run)
     mouseUp()
 
-def find_trade():
-    global count
+
+def center_shift(button):
+    start = button.getCenter()
+    stop = Location(start.getX(), r.getCenter().getY())
+    mouseMove(start)
+    mouseDown(Button.LEFT); wait(0.5)
+    mouseMove(stop)
+    mouseUp()
+
+def capture_trade():
+    dir = "D:\Skulix\Screenshots"
+    img = capture(r3)
+
+    imgNew = "clashroyale"
+    shutil.move(img, os.path.join(dir, imgNew + ".png"))
+
+def send_trade(clan):
+    click("1540555920427.png")
+
+    embed = 'payload_json:{{    "embeds": [{{        "title": "Trade Found",        "description": "{}/200",        "fields": [{{            "name": "Clan",            "value": "{} ({})"        }}],        "color": 14177041,        "footer": {{            "text": "Bot by GR8 | Titan",            "icon_url": "https://i.imgur.com/TP8GXZb.png"        }}    }}]}}'
+    embed = embed.format(count, clans[clan], clan)
+
+    click("1541750450407.png")
+    type("a", Key.CTRL)
+    paste(embed)
+    click("1540319481238.png")
+    click("1540319491461.png")
+    
+
+def find_trade(clan):
     if r.exists("TradeButton.png"):
-        scroll_up()
-        dir = "D:\Skulix\Screenshots"
-        img = capture(r)
-
-        imgNew = "clashroyale"
-        shutil.move(img, os.path.join(dir, imgNew + ".png"))
-
-        click("1540555920427.png")
-        click("1540319481238.png")
-        click("1540319491461.png")
-
-        count += 1
-
+        trade = r.getLastMatch()
+        center_shift(trade)
+        capture_trade()
+        send_trade(clan)
     if r2.exists("1541321891125.png"):
         r2.click("1541321891125.png")
-        find_trade()
+        wait(0.5)
+        find_trade(clan)
     
 def leave_clan():
     if r.exists("PurpleTrophy.png"):
         r.click("PurpleTrophy.png")
         r.click("LeaveButton.png")
         r.click("YesButton.png")
-        
-for clan in clans:
-    if count > 200:
-        break
-    if r.exists("SearchButton.png"):
-        if r.exists("1540557093477.png"):
+
+def search_clan(clan):
+    if r.exists("1540557093477.png"):
             r.click("1540557093477.png")
-        r.type("1540555777035.png" ,clan)
-        r.click("1540555791644.png")
-        wait(1)
-        if r.exists("YellowTrophy.png"):
-            r.click("YellowTrophy.png")
-        else:
-            print(clan)
-            continue
-        if r.exists("JoinButton.png"):
-            r.click("JoinButton.png")
-            if r.exists("1540564325650.png"):
-                r.click("1540564340338.png")
-                r.click("1540556749121.png")
-                print(clan)
-                continue
-            if not exists("PageDownButton.png"):
-                print(clan)
-                continue
-            else:
-                click("PageDownButton.png")
-            wait(1)
-            scroll_up()
-            if r2.exists("1541321891125.png") or r.exists("TradeButton.png"):
-                find_trade()
-            leave_clan()
-        else:
-            r.click("1540556749121.png")
+    r.paste("1540555777035.png" ,clan)
+    r.click("1540555791644.png")
+
+tags = clans.keys()
+random.shuffle(tags)
+for clan in tags:
+    if count > 200:
+        print(badclans)
+        break
+
+    search_clan(clan)
+    wait(1)
+    if r.exists("YellowTrophy.png"):
+        r.click("YellowTrophy.png")
     else:
+        badclans.append(clan)
+        continue
+    if r.exists("JoinButton.png"):
+        r.click("JoinButton.png")
+        if r.exists("1540564325650.png"):
+            r.click("1540564340338.png")
+            r.click("1540556749121.png")
+            badclans.append(clan)
+            continue
+        if not exists("PageDownButton.png"):
+            badclans.append(clan)
+            continue
+        else:
+            click("PageDownButton.png")
+        wait(1)
+        count += 1
+        if r.exists("TradeButton.png"):
+            trade = r.getLastMatch()
+            center_shift(trade)
+            capture_trade()
+            send_trade(clan)
+            scroll_up()
+        else:
+            scroll_up()
+        if r2.exists("1541321891125.png") or r.exists("TradeButton.png"):
+            find_trade(clan)
         leave_clan()
+    else:
+        r.click("1540556749121.png")
