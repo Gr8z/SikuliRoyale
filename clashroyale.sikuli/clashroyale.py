@@ -45,16 +45,16 @@ def capture_trade():
     shutil.move(img, os.path.join(dir, imgNew + ".png"))
 
 def send_trade(clan):
-    click("1540555920427.png")
+    click("postman.png")
 
     embed = 'payload_json:{{    "embeds": [{{        "title": "Trade Found",        "description": "{}/100",        "fields": [{{            "name": "Clan",            "value": "{} ([{}](https://royaleapi.com/clan/{}))"        }},{{            "name": "Time",            "value": "{}"        }}],        "color": 14177041,        "footer": {{            "text": "Bot by GR8 | Titan",            "icon_url": "https://i.imgur.com/TP8GXZb.png"        }}    }}]}}'
     embed = embed.format(count, clans[clan], clan, clan.strip("#"), strftime("%a, %d %b %Y %H:%M:%S GMT", gmtime()))
 
-    click("1541750450407.png")
+    click("payload_json.png")
     type("a", Key.CTRL)
     paste(embed)
-    click("1540319481238.png")
-    click("1540319491461.png")
+    click("send.png")
+    click("nox.png")
     
 
 def find_trade(clan):
@@ -63,8 +63,8 @@ def find_trade(clan):
         center_shift(trade)
         capture_trade()
         send_trade(clan)
-    if r2.exists("1541321891125.png"):
-        r2.click("1541321891125.png")
+    if r2.exists("NotiUp.png"):
+        r2.click("NotiUp.png")
         wait(0.5)
         find_trade(clan)
     
@@ -75,10 +75,10 @@ def leave_clan():
         r.click("YesButton.png")
 
 def search_clan(clan):
-    if r.exists("1540557093477.png"):
-            r.click("1540557093477.png")
-    r.paste("1540555777035.png" ,clan)
-    r.click("1540555791644.png")
+    if r.exists("crossButton.png"):
+            r.click("crossButton.png")
+    r.paste("clanSearch.png" ,clan)
+    r.click("searchButton.png")
 
 tags = clans.keys()
 random.shuffle(tags)
@@ -96,9 +96,9 @@ for clan in tags:
         continue
     if r.exists("JoinButton.png"):
         r.click("JoinButton.png")
-        if r.exists("1540564325650.png"):
-            r.click("1540564340338.png")
-            r.click("1540556749121.png")
+        if r.exists("RequestTitle.png"):
+            r.click("cancelButton.png")
+            r.click("redCross.png")
             badclans.append(clan)
             continue
         if not exists("PageDownButton.png"):
@@ -117,8 +117,8 @@ for clan in tags:
             scroll_up()
         else:
             scroll_up()
-        if r2.exists("1541321891125.png") or r.exists("TradeButton.png"):
+        if r2.exists("NotiUp.png") or r.exists("TradeButton.png"):
             find_trade(clan)
         leave_clan()
     else:
-        r.click("1540556749121.png")
+        r.click("redCross.png")

@@ -117,16 +117,16 @@ r.setAutoWaitTimeout(<span class="dig">1</span>)
     shutil.move(img, os.path.join(dir, imgNew + <img src=".png" />))
 
 <span class="kw">def</span> send_trade(clan):
-    <span class="skw">click</span>(<img src="1540555920427.png" />)
+    <span class="skw">click</span>(<img src="postman.png" />)
 
     embed = <span class="str">'payload_json:{{    "embeds": [{{        "title": "Trade Found",        "description": "{}/100",        "fields": [{{            "name": "Clan",            "value": "{} ([{}](https://royaleapi.com/clan/{}))"        }},{{            "name": "Time",            "value": "{}"        }}],        "color": 14177041,        "footer": {{            "text": "Bot by GR8 | Titan",            "icon_url": "https://i.imgur.com/TP8GXZb.png"        }}    }}]}}'</span>
     embed = embed.format(count, clans[clan], clan, clan.strip(<span class="str">"#"</span>), strftime(<span class="str">"%a, %d %b %Y %H:%M:%S GMT"</span>, gmtime()))
 
-    <span class="skw">click</span>(<img src="1541750450407.png" />)
+    <span class="skw">click</span>(<img src="payload_json.png" />)
     <span class="skw">type</span>(<span class="str">"a"</span>, Key.CTRL)
     paste(embed)
-    <span class="skw">click</span>(<img src="1540319481238.png" />)
-    <span class="skw">click</span>(<img src="1540319491461.png" />)
+    <span class="skw">click</span>(<img src="send.png" />)
+    <span class="skw">click</span>(<img src="nox.png" />)
 
 
 <span class="kw">def</span> find_trade(clan):
@@ -135,8 +135,8 @@ r.setAutoWaitTimeout(<span class="dig">1</span>)
         center_shift(trade)
         capture_trade()
         send_trade(clan)
-    <span class="kw">if</span> r2.exists(<img src="1541321891125.png" />):
-        r2.<span class="skw">click</span>(<img src="1541321891125.png" />)
+    <span class="kw">if</span> r2.exists(<img src="NotiUp.png" />):
+        r2.<span class="skw">click</span>(<img src="NotiUp.png" />)
         <span class="skw">wait</span>(<span class="dig">0.5</span>)
         find_trade(clan)
 
@@ -147,10 +147,10 @@ r.setAutoWaitTimeout(<span class="dig">1</span>)
         r.<span class="skw">click</span>(<img src="YesButton.png" />)
 
 <span class="kw">def</span> search_clan(clan):
-    <span class="kw">if</span> r.exists(<img src="1540557093477.png" />):
-            r.<span class="skw">click</span>(<img src="1540557093477.png" />)
-    r.paste(<img src="1540555777035.png" /> ,clan)
-    r.<span class="skw">click</span>(<img src="1540555791644.png" />)
+    <span class="kw">if</span> r.exists(<img src="crossButton.png" />):
+            r.<span class="skw">click</span>(<img src="crossButton.png" />)
+    r.paste(<img src="clanSearch.png" /> ,clan)
+    r.<span class="skw">click</span>(<img src="searchButton.png" />)
 
 tags = clans.keys()
 random.shuffle(tags)
@@ -168,9 +168,9 @@ random.shuffle(tags)
         <span class="kw">continue</span>
     <span class="kw">if</span> r.exists(<img src="JoinButton.png" />):
         r.<span class="skw">click</span>(<img src="JoinButton.png" />)
-        <span class="kw">if</span> r.exists(<img src="1540564325650.png" />):
-            r.<span class="skw">click</span>(<img src="1540564340338.png" />)
-            r.<span class="skw">click</span>(<img src="1540556749121.png" />)
+        <span class="kw">if</span> r.exists(<img src="RequestTitle.png" />):
+            r.<span class="skw">click</span>(<img src="cancelButton.png" />)
+            r.<span class="skw">click</span>(<img src="redCross.png" />)
             badclans.append(clan)
             <span class="kw">continue</span>
         <span class="kw">if</span> <span class="kw">not</span> exists(<img src="PageDownButton.png" />):
@@ -189,11 +189,11 @@ random.shuffle(tags)
             scroll_up()
         <span class="kw">else</span>:
             scroll_up()
-        <span class="kw">if</span> r2.exists(<img src="1541321891125.png" />) <span class="kw">or</span> r.exists(<img src="TradeButton.png" />):
+        <span class="kw">if</span> r2.exists(<img src="NotiUp.png" />) <span class="kw">or</span> r.exists(<img src="TradeButton.png" />):
             find_trade(clan)
         leave_clan()
     <span class="kw">else</span>:
-        r.<span class="skw">click</span>(<img src="1540556749121.png" />)
+        r.<span class="skw">click</span>(<img src="redCross.png" />)
 </pre>
 </body>
 </html>
