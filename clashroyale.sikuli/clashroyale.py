@@ -3,6 +3,7 @@ import os
 import time
 import random
 import json
+from time import gmtime, strftime
 
 count = 1
 badclans = []
@@ -46,8 +47,8 @@ def capture_trade():
 def send_trade(clan):
     click("1540555920427.png")
 
-    embed = 'payload_json:{{    "embeds": [{{        "title": "Trade Found",        "description": "{}/200",        "fields": [{{            "name": "Clan",            "value": "{} ({})"        }}],        "color": 14177041,        "footer": {{            "text": "Bot by GR8 | Titan",            "icon_url": "https://i.imgur.com/TP8GXZb.png"        }}    }}]}}'
-    embed = embed.format(count, clans[clan], clan)
+    embed = 'payload_json:{{    "embeds": [{{        "title": "Trade Found",        "description": "{}/100",        "fields": [{{            "name": "Clan",            "value": "{} ([{}](https://royaleapi.com/clan/{}))"        }},{{            "name": "Time",            "value": "{}"        }}],        "color": 14177041,        "footer": {{            "text": "Bot by GR8 | Titan",            "icon_url": "https://i.imgur.com/TP8GXZb.png"        }}    }}]}}'
+    embed = embed.format(count, clans[clan], clan, clan.strip("#"), strftime("%a, %d %b %Y %H:%M:%S GMT", gmtime()))
 
     click("1541750450407.png")
     type("a", Key.CTRL)
@@ -82,7 +83,7 @@ def search_clan(clan):
 tags = clans.keys()
 random.shuffle(tags)
 for clan in tags:
-    if count > 200:
+    if count > 100:
         print(badclans)
         break
 
@@ -112,6 +113,7 @@ for clan in tags:
             center_shift(trade)
             capture_trade()
             send_trade(clan)
+            scroll_up()
             scroll_up()
         else:
             scroll_up()

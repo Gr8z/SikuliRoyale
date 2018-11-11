@@ -75,6 +75,7 @@
 <span class="kw">import</span> time
 <span class="kw">import</span> random
 <span class="kw">import</span> json
+<span class="kw">from</span> time <span class="kw">import</span> gmtime, strftime
 
 count = <span class="dig">1</span>
 badclans = []
@@ -118,8 +119,8 @@ r.setAutoWaitTimeout(<span class="dig">1</span>)
 <span class="kw">def</span> send_trade(clan):
     <span class="skw">click</span>(<img src="1540555920427.png" />)
 
-    embed = <span class="str">'payload_json:{{    "embeds": [{{        "title": "Trade Found",        "description": "{}/200",        "fields": [{{            "name": "Clan",            "value": "{} ({})"        }}],        "color": 14177041,        "footer": {{            "text": "Bot by GR8 | Titan",            "icon_url": "https://i.imgur.com/TP8GXZb.png"        }}    }}]}}'</span>
-    embed = embed.format(count, clans[clan], clan)
+    embed = <span class="str">'payload_json:{{    "embeds": [{{        "title": "Trade Found",        "description": "{}/100",        "fields": [{{            "name": "Clan",            "value": "{} ([{}](https://royaleapi.com/clan/{}))"        }},{{            "name": "Time",            "value": "{}"        }}],        "color": 14177041,        "footer": {{            "text": "Bot by GR8 | Titan",            "icon_url": "https://i.imgur.com/TP8GXZb.png"        }}    }}]}}'</span>
+    embed = embed.format(count, clans[clan], clan, clan.strip(<span class="str">"#"</span>), strftime(<span class="str">"%a, %d %b %Y %H:%M:%S GMT"</span>, gmtime()))
 
     <span class="skw">click</span>(<img src="1541750450407.png" />)
     <span class="skw">type</span>(<span class="str">"a"</span>, Key.CTRL)
@@ -154,7 +155,7 @@ r.setAutoWaitTimeout(<span class="dig">1</span>)
 tags = clans.keys()
 random.shuffle(tags)
 <span class="kw">for</span> clan <span class="kw">in</span> tags:
-    <span class="kw">if</span> count &gt; <span class="dig">200</span>:
+    <span class="kw">if</span> count &gt; <span class="dig">100</span>:
         <span class="kw">print</span>(badclans)
         <span class="kw">break</span>
 
@@ -184,6 +185,7 @@ random.shuffle(tags)
             center_shift(trade)
             capture_trade()
             send_trade(clan)
+            scroll_up()
             scroll_up()
         <span class="kw">else</span>:
             scroll_up()
