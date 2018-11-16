@@ -14,22 +14,22 @@ with open('clans.json') as json_data:
 saved_tags = deepcopy(tags)
 for tag in saved_tags:
     try:
-        saved_tags[tag].decode('ascii')
-    except UnicodeDecodeError:
-        tags.remove(tag)
+        print(tags[tag])
+    except UnicodeEncodeError:
+        tags.pop(tag)
         with open('clans.json', 'w') as outfile:
             json.dump(tags, outfile, indent=2)
         continue
 
     try:
-        clan = client.get_clan_info(tag.strip("#"))
+        clan = client.get_clan(tag.strip("#"))
     except Exception as e:
         print(e)
     else:
         try:
             if not ((20 < clan.members < 40) and (clan.type == 'open') and (clan.required_trophies <= 4000) and (600 < clan.clan_war_trophies < 3000)):
-                tags.remove(tag)
-
+                tags.pop(tag)
+            print(tags[tag])
             with open('clans.json', 'w') as outfile:
                 json.dump(tags, outfile, indent=2)
         except Exception as e:
