@@ -8,17 +8,20 @@ from time import gmtime, strftime
 count = 1
 badclans = []
 
+filterGiveCards = ['ElectroDragon']
+filterGetCards = ['LavaHound', 'Sparky', 'Clone', 'Heal', 'Rage']
+
 with open('D:\Scripts\SikuliRoyale\clashroyale.sikuli\clans.json') as json_data:
     clans = json.load(json_data)
 
-r = App.focusedWindow()
-r2 = Region(r.x, r.y + 150, r.w - 400, r.h - 800)
-r3 = Region(r.x, r.y + 185, r.w, 480)
-r.highlight(2)
-r.setAutoWaitTimeout(1)
+app_region = App.focusedWindow()
+top_region = Region(app_region.x, app_region.y + 150, app_region.w - 400, app_region.h - 800)
+chat_region = Region(app_region.x, app_region.y + 185, app_region.w, 480)
+app_region.highlight(2)
+app_region.setAutoWaitTimeout(1)
 
 def scroll_up():
-    x1, y1 = (r.x + 230, r.y + 200)
+    x1, y1 = (app_region.x + 230, app_region.y + 200)
     start = Location(x1, y1)
     stepY = 200
     run = start
@@ -28,18 +31,19 @@ def scroll_up():
     mouseMove(run)
     mouseUp()
 
-
 def center_shift(button):
     start = button.getCenter()
-    stop = Location(start.getX(), r.getCenter().getY())
-    mouseMove(start)
-    mouseDown(Button.LEFT); wait(0.5)
-    mouseMove(stop)
-    mouseUp()
+    stop = Location(start.getX(), app_region.getCenter().getY())
 
-def capture_trade():
+    if abs(app_region.getCenter().getY() - button.getCenter().getY()) > 10:
+        mouseMove(start)
+        mouseDown(Button.LEFT); wait(0.5)
+        mouseMove(stop)
+        mouseUp()
+
+def capture_trade(region):
     dir = "D:\Skulix\Screenshots"
-    img = capture(r3)
+    img = capture(region)
 
     imgNew = "clashroyale"
     shutil.move(img, os.path.join(dir, imgNew + ".png"))
@@ -58,27 +62,34 @@ def send_trade(clan):
     
 
 def find_trade(clan):
-    if r.exists("TradeButton.png"):
-        trade = r.getLastMatch()
+    if app_region.exists("TradeButton.png"):
+        trade = app_region.getLastMatch()
         center_shift(trade)
-        capture_trade()
-        send_trade(clan)
-    if r2.exists("NotiUp.png"):
-        r2.click("NotiUp.png")
+        wait(0.2)
+
+        trades = findAll("TradeButton.png")
+        sorted_trades = sorted(trades, key=lambda m:m.y)
+
+        for page_trade in sorted_trades:
+            trade_region = Region(page_trade.x - 300, page_trade.y - 30, page_trade.w + 170, page_trade.h + 70)
+            capture_trade(trade_region)
+            send_trade(clan)
+    if top_region.exists("NotiUp.png"):
+        top_region.click("NotiUp.png")
         wait(0.5)
         find_trade(clan)
     
 def leave_clan():
-    if r.exists("PurpleTrophy.png"):
-        r.click("PurpleTrophy.png")
-        r.click("LeaveButton.png")
-        r.click("YesButton.png")
+    if app_region.exists("PurpleTrophy.png"):
+        app_region.click("PurpleTrophy.png")
+        app_region.click("LeaveButton.png")
+        app_region.click("YesButton.png")
 
 def search_clan(clan):
-    if r.exists("crossButton.png"):
-            r.click("crossButton.png")
-    r.paste("clanSearch.png" ,clan)
-    r.click("searchButton.png")
+    if app_region.exists("crossButton.png"):
+            app_region.click("crossButton.png")
+    app_region.paste("clanSearch.png" ,clan)
+    app_region.click("searchButton.png")
 
 tags = clans.keys()
 random.shuffle(tags)
@@ -89,16 +100,16 @@ for clan in tags:
 
     search_clan(clan)
     wait(1)
-    if r.exists("YellowTrophy.png"):
-        r.click("YellowTrophy.png")
+    if app_region.exists("YellowTrophy.png"):
+        app_region.click("YellowTrophy.png")
     else:
         badclans.append(clan)
         continue
-    if r.exists("JoinButton.png"):
-        r.click("JoinButton.png")
-        if r.exists("RequestTitle.png"):
-            r.click("cancelButton.png")
-            r.click("redCross.png")
+    if app_region.exists("JoinButton.png"):
+        app_region.click("JoinButton.png")
+        if app_region.exists("RequestTitle.png"):
+            app_region.click("cancelButton.png")
+            app_region.click("redCross.png")
             badclans.append(clan)
             continue
         if not exists("PageDownButton.png"):
@@ -108,17 +119,19 @@ for clan in tags:
             click("PageDownButton.png")
         wait(1)
         count += 1
-        if r.exists("TradeButton.png"):
-            trade = r.getLastMatch()
+        if app_region.exists("TradeButton.png"):
+            trade = app_region.getLastMatch()
             center_shift(trade)
-            capture_trade()
+            wait(0.2)
+            trade_region = Region(trade.x - 300, trade.y - 30, trade.w + 170, trade.h + 70)
+            capture_trade(trade_region)
             send_trade(clan)
             scroll_up()
             scroll_up()
         else:
             scroll_up()
-        if r2.exists("NotiUp.png") or r.exists("TradeButton.png"):
+        if top_region.exists("NotiUp.png") or app_region.exists("TradeButton.png"):
             find_trade(clan)
         leave_clan()
     else:
-        r.click("redCross.png")
+        app_region.click("redCross.png")

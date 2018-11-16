@@ -80,17 +80,20 @@
 count = <span class="dig">1</span>
 badclans = []
 
+filterGiveCards = [<span class="str">'ElectroDragon'</span>]
+filterGetCards = [<span class="str">'LavaHound'</span>, <span class="str">'Sparky'</span>, <span class="str">'Clone'</span>, <span class="str">'Heal'</span>, <span class="str">'Rage'</span>]
+
 <span class="kw">with</span> open(<span class="str">'D:\Scripts\SikuliRoyale\clashroyale.sikuli\clans.json'</span>) <span class="kw">as</span> json_data:
     clans = json.load(json_data)
 
-r = App.focusedWindow()
-r2 = Region(r.x, r.y + <span class="dig">150</span>, r.w - <span class="dig">400</span>, r.h - <span class="dig">800</span>)
-r3 = Region(r.x, r.y + <span class="dig">185</span>, r.w, <span class="dig">480</span>)
-r.highlight(<span class="dig">2</span>)
-r.setAutoWaitTimeout(<span class="dig">1</span>)
+app_region = App.focusedWindow()
+top_region = Region(app_region.x, app_region.y + <span class="dig">150</span>, app_region.w - <span class="dig">400</span>, app_region.h - <span class="dig">800</span>)
+chat_region = Region(app_region.x, app_region.y + <span class="dig">185</span>, app_region.w, <span class="dig">480</span>)
+app_region.highlight(<span class="dig">2</span>)
+app_region.setAutoWaitTimeout(<span class="dig">1</span>)
 
 <span class="kw">def</span> scroll_up():
-    x1, y1 = (r.x + <span class="dig">230</span>, r.y + <span class="dig">200</span>)
+    x1, y1 = (app_region.x + <span class="dig">230</span>, app_region.y + <span class="dig">200</span>)
     start = Location(x1, y1)
     stepY = <span class="dig">200</span>
     run = start
@@ -100,18 +103,19 @@ r.setAutoWaitTimeout(<span class="dig">1</span>)
     mouseMove(run)
     mouseUp()
 
-
 <span class="kw">def</span> center_shift(button):
     start = button.getCenter()
-    stop = Location(start.getX(), r.getCenter().getY())
-    mouseMove(start)
-    mouseDown(Button.LEFT); <span class="skw">wait</span>(<span class="dig">0.5</span>)
-    mouseMove(stop)
-    mouseUp()
+    stop = Location(start.getX(), app_region.getCenter().getY())
 
-<span class="kw">def</span> capture_trade():
+    <span class="kw">if</span> abs(app_region.getCenter().getY() - button.getCenter().getY()) &gt; <span class="dig">10</span>:
+        mouseMove(start)
+        mouseDown(Button.LEFT); <span class="skw">wait</span>(<span class="dig">0.5</span>)
+        mouseMove(stop)
+        mouseUp()
+
+<span class="kw">def</span> capture_trade(region):
     dir = <span class="str">"D:\Skulix\Screenshots"</span>
-    img = <span class="skw">capture</span>(r3)
+    img = <span class="skw">capture</span>(region)
 
     imgNew = <span class="str">"clashroyale"</span>
     shutil.move(img, os.path.join(dir, imgNew + <img src=".png" />))
@@ -130,27 +134,34 @@ r.setAutoWaitTimeout(<span class="dig">1</span>)
 
 
 <span class="kw">def</span> find_trade(clan):
-    <span class="kw">if</span> r.exists(<img src="TradeButton.png" />):
-        trade = r.getLastMatch()
+    <span class="kw">if</span> app_region.exists(<img src="TradeButton.png" />):
+        trade = app_region.getLastMatch()
         center_shift(trade)
-        capture_trade()
-        send_trade(clan)
-    <span class="kw">if</span> r2.exists(<img src="NotiUp.png" />):
-        r2.<span class="skw">click</span>(<img src="NotiUp.png" />)
+        <span class="skw">wait</span>(<span class="dig">0.2</span>)
+
+        trades = findAll(<img src="TradeButton.png" />)
+        sorted_trades = sorted(trades, key=<span class="kw">lambda</span> m:m.y)
+
+        <span class="kw">for</span> page_trade <span class="kw">in</span> sorted_trades:
+            trade_region = Region(page_trade.x - <span class="dig">300</span>, page_trade.y - <span class="dig">30</span>, page_trade.w + <span class="dig">170</span>, page_trade.h + <span class="dig">70</span>)
+            capture_trade(trade_region)
+            send_trade(clan)
+    <span class="kw">if</span> top_region.exists(<img src="NotiUp.png" />):
+        top_region.<span class="skw">click</span>(<img src="NotiUp.png" />)
         <span class="skw">wait</span>(<span class="dig">0.5</span>)
         find_trade(clan)
 
 <span class="kw">def</span> leave_clan():
-    <span class="kw">if</span> r.exists(<img src="PurpleTrophy.png" />):
-        r.<span class="skw">click</span>(<img src="PurpleTrophy.png" />)
-        r.<span class="skw">click</span>(<img src="LeaveButton.png" />)
-        r.<span class="skw">click</span>(<img src="YesButton.png" />)
+    <span class="kw">if</span> app_region.exists(<img src="PurpleTrophy.png" />):
+        app_region.<span class="skw">click</span>(<img src="PurpleTrophy.png" />)
+        app_region.<span class="skw">click</span>(<img src="LeaveButton.png" />)
+        app_region.<span class="skw">click</span>(<img src="YesButton.png" />)
 
 <span class="kw">def</span> search_clan(clan):
-    <span class="kw">if</span> r.exists(<img src="crossButton.png" />):
-            r.<span class="skw">click</span>(<img src="crossButton.png" />)
-    r.paste(<img src="clanSearch.png" /> ,clan)
-    r.<span class="skw">click</span>(<img src="searchButton.png" />)
+    <span class="kw">if</span> app_region.exists(<img src="crossButton.png" />):
+            app_region.<span class="skw">click</span>(<img src="crossButton.png" />)
+    app_region.paste(<img src="clanSearch.png" /> ,clan)
+    app_region.<span class="skw">click</span>(<img src="searchButton.png" />)
 
 tags = clans.keys()
 random.shuffle(tags)
@@ -161,16 +172,16 @@ random.shuffle(tags)
 
     search_clan(clan)
     <span class="skw">wait</span>(<span class="dig">1</span>)
-    <span class="kw">if</span> r.exists(<img src="YellowTrophy.png" />):
-        r.<span class="skw">click</span>(<img src="YellowTrophy.png" />)
+    <span class="kw">if</span> app_region.exists(<img src="YellowTrophy.png" />):
+        app_region.<span class="skw">click</span>(<img src="YellowTrophy.png" />)
     <span class="kw">else</span>:
         badclans.append(clan)
         <span class="kw">continue</span>
-    <span class="kw">if</span> r.exists(<img src="JoinButton.png" />):
-        r.<span class="skw">click</span>(<img src="JoinButton.png" />)
-        <span class="kw">if</span> r.exists(<img src="RequestTitle.png" />):
-            r.<span class="skw">click</span>(<img src="cancelButton.png" />)
-            r.<span class="skw">click</span>(<img src="redCross.png" />)
+    <span class="kw">if</span> app_region.exists(<img src="JoinButton.png" />):
+        app_region.<span class="skw">click</span>(<img src="JoinButton.png" />)
+        <span class="kw">if</span> app_region.exists(<img src="RequestTitle.png" />):
+            app_region.<span class="skw">click</span>(<img src="cancelButton.png" />)
+            app_region.<span class="skw">click</span>(<img src="redCross.png" />)
             badclans.append(clan)
             <span class="kw">continue</span>
         <span class="kw">if</span> <span class="kw">not</span> exists(<img src="PageDownButton.png" />):
@@ -180,20 +191,22 @@ random.shuffle(tags)
             <span class="skw">click</span>(<img src="PageDownButton.png" />)
         <span class="skw">wait</span>(<span class="dig">1</span>)
         count += <span class="dig">1</span>
-        <span class="kw">if</span> r.exists(<img src="TradeButton.png" />):
-            trade = r.getLastMatch()
+        <span class="kw">if</span> app_region.exists(<img src="TradeButton.png" />):
+            trade = app_region.getLastMatch()
             center_shift(trade)
-            capture_trade()
+            <span class="skw">wait</span>(<span class="dig">0.2</span>)
+            trade_region = Region(trade.x - <span class="dig">300</span>, trade.y - <span class="dig">30</span>, trade.w + <span class="dig">170</span>, trade.h + <span class="dig">70</span>)
+            capture_trade(trade_region)
             send_trade(clan)
             scroll_up()
             scroll_up()
         <span class="kw">else</span>:
             scroll_up()
-        <span class="kw">if</span> r2.exists(<img src="NotiUp.png" />) <span class="kw">or</span> r.exists(<img src="TradeButton.png" />):
+        <span class="kw">if</span> top_region.exists(<img src="NotiUp.png" />) <span class="kw">or</span> app_region.exists(<img src="TradeButton.png" />):
             find_trade(clan)
         leave_clan()
     <span class="kw">else</span>:
-        r.<span class="skw">click</span>(<img src="redCross.png" />)
+        app_region.<span class="skw">click</span>(<img src="redCross.png" />)
 </pre>
 </body>
 </html>
