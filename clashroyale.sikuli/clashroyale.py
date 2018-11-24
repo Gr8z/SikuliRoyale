@@ -9,7 +9,7 @@ count = 1
 badclans = []
 
 filterGiveCards = ["edrag.png"]
-filterGetCards = ["lavahound.png","sparky.png","clone.png"]
+filterGetCards = [Pattern("lavahound.png").similar(0.81),"sparky.png","clone.png","mirror.png"]
 
 with open('D:\Scripts\SikuliRoyale\clashroyale.sikuli\clans.json') as json_data:
     clans = json.load(json_data)
@@ -126,11 +126,11 @@ for clan in tags:
             app_region.click("redCross.png")
             badclans.append(clan)
             continue
-        if not app_region.exists("PageDownButton.png"):
+        if not app_region.exists("PageDownButton.png", 2):
             badclans.append(clan)
             continue
         else:
-            click("PageDownButton.png")
+            app_region.click("PageDownButton.png")
         wait(1)
         count += 1
         if app_region.exists("TradeButton.png"):

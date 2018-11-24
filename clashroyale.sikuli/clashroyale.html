@@ -81,7 +81,7 @@ count = <span class="dig">1</span>
 badclans = []
 
 filterGiveCards = [<img src="edrag.png" />]
-filterGetCards = [<img src="lavahound.png" />,<img src="sparky.png" />,<img src="clone.png" />]
+filterGetCards = [Pattern(<img src="lavahound.png" />).similar(<span class="dig">0.81</span>),<img src="sparky.png" />,<img src="clone.png" />,<img src="mirror.png" />]
 
 <span class="kw">with</span> open(<span class="str">'D:\Scripts\SikuliRoyale\clashroyale.sikuli\clans.json'</span>) <span class="kw">as</span> json_data:
     clans = json.load(json_data)
@@ -198,11 +198,11 @@ random.shuffle(tags)
             app_region.<span class="skw">click</span>(<img src="redCross.png" />)
             badclans.append(clan)
             <span class="kw">continue</span>
-        <span class="kw">if</span> <span class="kw">not</span> app_region.exists(<img src="PageDownButton.png" />):
+        <span class="kw">if</span> <span class="kw">not</span> app_region.exists(<img src="PageDownButton.png" />, <span class="dig">2</span>):
             badclans.append(clan)
             <span class="kw">continue</span>
         <span class="kw">else</span>:
-            <span class="skw">click</span>(<img src="PageDownButton.png" />)
+            app_region.<span class="skw">click</span>(<img src="PageDownButton.png" />)
         <span class="skw">wait</span>(<span class="dig">1</span>)
         count += <span class="dig">1</span>
         <span class="kw">if</span> app_region.exists(<img src="TradeButton.png" />):
