@@ -80,17 +80,18 @@
 count = <span class="dig">1</span>
 badclans = []
 
-filterGiveCards = [<span class="str">'ElectroDragon'</span>]
-filterGetCards = [<span class="str">'LavaHound'</span>, <span class="str">'Sparky'</span>, <span class="str">'Clone'</span>, <span class="str">'Heal'</span>, <span class="str">'Rage'</span>]
+filterGiveCards = [<img src="edrag.png" />]
+filterGetCards = [<img src="lavahound.png" />,<img src="sparky.png" />,<img src="clone.png" />]
 
 <span class="kw">with</span> open(<span class="str">'D:\Scripts\SikuliRoyale\clashroyale.sikuli\clans.json'</span>) <span class="kw">as</span> json_data:
     clans = json.load(json_data)
 
 app_region = App.focusedWindow()
 top_region = Region(app_region.x, app_region.y + <span class="dig">150</span>, app_region.w - <span class="dig">400</span>, app_region.h - <span class="dig">800</span>)
-chat_region = Region(app_region.x, app_region.y + <span class="dig">185</span>, app_region.w, <span class="dig">480</span>)
+
 app_region.highlight(<span class="dig">2</span>)
 app_region.setAutoWaitTimeout(<span class="dig">1</span>)
+top_region.setAutoWaitTimeout(<span class="dig">1</span>)
 
 <span class="kw">def</span> scroll_up():
     x1, y1 = (app_region.x + <span class="dig">230</span>, app_region.y + <span class="dig">200</span>)
@@ -143,9 +144,22 @@ app_region.setAutoWaitTimeout(<span class="dig">1</span>)
         sorted_trades = sorted(trades, key=<span class="kw">lambda</span> m:m.y)
 
         <span class="kw">for</span> page_trade <span class="kw">in</span> sorted_trades:
+            filter = True
             trade_region = Region(page_trade.x - <span class="dig">300</span>, page_trade.y - <span class="dig">30</span>, page_trade.w + <span class="dig">170</span>, page_trade.h + <span class="dig">70</span>)
-            capture_trade(trade_region)
-            send_trade(clan)
+            trade_give = Region(trade_region.x, trade_region.y, trade_region.w/<span class="dig">2</span>, trade_region.h)
+            trade_get = Region(trade_give.x+trade_give.w, trade_give.y, trade_give.w, trade_give.h)
+
+            <span class="kw">for</span> give <span class="kw">in</span> filterGiveCards:
+                <span class="kw">if</span> trade_give.exists(give, <span class="dig">0.5</span>):
+                    filter = False
+
+            <span class="kw">for</span> want <span class="kw">in</span> filterGetCards:
+                <span class="kw">if</span> trade_get.exists(want, <span class="dig">0.5</span>):
+                    filter = False
+
+            <span class="kw">if</span> filter:
+                capture_trade(trade_region)
+                send_trade(clan)
     <span class="kw">if</span> top_region.exists(<img src="NotiUp.png" />):
         top_region.<span class="skw">click</span>(<img src="NotiUp.png" />)
         <span class="skw">wait</span>(<span class="dig">0.5</span>)
@@ -166,7 +180,7 @@ app_region.setAutoWaitTimeout(<span class="dig">1</span>)
 tags = clans.keys()
 random.shuffle(tags)
 <span class="kw">for</span> clan <span class="kw">in</span> tags:
-    <span class="kw">if</span> count &gt; <span class="dig">100</span>:
+    <span class="kw">if</span> count &gt;= <span class="dig">100</span>:
         <span class="kw">print</span>(badclans)
         <span class="kw">break</span>
 
@@ -184,7 +198,7 @@ random.shuffle(tags)
             app_region.<span class="skw">click</span>(<img src="redCross.png" />)
             badclans.append(clan)
             <span class="kw">continue</span>
-        <span class="kw">if</span> <span class="kw">not</span> exists(<img src="PageDownButton.png" />):
+        <span class="kw">if</span> <span class="kw">not</span> app_region.exists(<img src="PageDownButton.png" />):
             badclans.append(clan)
             <span class="kw">continue</span>
         <span class="kw">else</span>:

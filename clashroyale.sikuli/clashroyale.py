@@ -8,17 +8,18 @@ from time import gmtime, strftime
 count = 1
 badclans = []
 
-filterGiveCards = ['ElectroDragon']
-filterGetCards = ['LavaHound', 'Sparky', 'Clone', 'Heal', 'Rage']
+filterGiveCards = ["edrag.png"]
+filterGetCards = ["lavahound.png","sparky.png","clone.png"]
 
 with open('D:\Scripts\SikuliRoyale\clashroyale.sikuli\clans.json') as json_data:
     clans = json.load(json_data)
 
 app_region = App.focusedWindow()
 top_region = Region(app_region.x, app_region.y + 150, app_region.w - 400, app_region.h - 800)
-chat_region = Region(app_region.x, app_region.y + 185, app_region.w, 480)
+
 app_region.highlight(2)
 app_region.setAutoWaitTimeout(1)
+top_region.setAutoWaitTimeout(1)
 
 def scroll_up():
     x1, y1 = (app_region.x + 230, app_region.y + 200)
@@ -71,9 +72,22 @@ def find_trade(clan):
         sorted_trades = sorted(trades, key=lambda m:m.y)
 
         for page_trade in sorted_trades:
+            filter = True
             trade_region = Region(page_trade.x - 300, page_trade.y - 30, page_trade.w + 170, page_trade.h + 70)
-            capture_trade(trade_region)
-            send_trade(clan)
+            trade_give = Region(trade_region.x, trade_region.y, trade_region.w/2, trade_region.h)
+            trade_get = Region(trade_give.x+trade_give.w, trade_give.y, trade_give.w, trade_give.h) 
+            
+            for give in filterGiveCards:
+                if trade_give.exists(give, 0.5):
+                    filter = False
+
+            for want in filterGetCards:
+                if trade_get.exists(want, 0.5):
+                    filter = False
+
+            if filter:
+                capture_trade(trade_region)
+                send_trade(clan)
     if top_region.exists("NotiUp.png"):
         top_region.click("NotiUp.png")
         wait(0.5)
@@ -94,7 +108,7 @@ def search_clan(clan):
 tags = clans.keys()
 random.shuffle(tags)
 for clan in tags:
-    if count > 100:
+    if count >= 100:
         print(badclans)
         break
 
@@ -112,7 +126,7 @@ for clan in tags:
             app_region.click("redCross.png")
             badclans.append(clan)
             continue
-        if not exists("PageDownButton.png"):
+        if not app_region.exists("PageDownButton.png"):
             badclans.append(clan)
             continue
         else:
