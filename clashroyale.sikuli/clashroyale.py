@@ -9,7 +9,7 @@ count = 1
 badclans = []
 
 filterGiveCards = ["edrag.png"]
-filterGetCards = [Pattern("lavahound.png").similar(0.81),"sparky.png","clone.png","mirror.png"]
+filterGetCards = [Pattern("lavahound.png").similar(0.79),"sparky.png","clone.png","mirror.png"]
 
 with open('D:\Scripts\SikuliRoyale\clashroyale.sikuli\clans.json') as json_data:
     clans = json.load(json_data)
